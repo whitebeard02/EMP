@@ -1,0 +1,23 @@
+name: epilepsy-ml
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pandas
+  - numpy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - pyyaml
+  - tqdm
+  - joblib
+  - shap
+  - mne                    # EEG processing
+  - ipykernel              # For Jupyter in VS Code
+  - cudatoolkit            # Installs CUDA libraries for other tools
+  - pip
+  - pip:
+    - xgboost              # PIP installs the Windows-compatible GPU version
+    - fastapi
+    - uvicorn

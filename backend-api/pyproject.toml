@@ -12,7 +12,7 @@ fastapi = "^0.115.0"
 uvicorn = {extras = ["standard"], version = "^0.30.0"}
 supabase = "^2.10.0"
 pydantic-settings = "^2.9.0"
-python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+python-jose = {extras = ["cryptography"], version = "^3.5.0"}
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 python-dotenv = "^1.0.0"
 structlog = "^24.4.0"
@@ -21,6 +21,12 @@ email-validator = "^2.3.0"
 xgboost = "^3.1.2"
 pandas = "^2.3.3"
 scikit-learn = "^1.8.0"
+python-multipart = "^0.0.21"
+numpy = "^2.3.5"
+mne = "^1.11.0"
+optuna = "^4.6.0"
+joblib = "^1.5.3"
+shap = "^0.50.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.0"
