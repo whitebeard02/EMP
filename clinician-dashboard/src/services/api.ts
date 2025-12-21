@@ -45,12 +45,32 @@ export const getPatientStats = async (filename: string) => {
   }
 };
 
-export const getSeizureRisk = async (inputs: PatientInputs): Promise<RiskPrediction | null> => {
-  try {
-    const response = await axios.post(`${API_URL}/ml/predict`, inputs);
-    return response.data;
-  } catch (error) {
-    console.error("Failed to connect to ML Engine:", error);
-    return null;
+// Inside src/services/api.ts
+
+export const getSeizureRisk = async (inputs: PatientInputs): Promise<RiskPrediction> => {
+  // 1. TRANSLATE Frontend names to Backend names
+  const payload = {
+    hours_of_sleep: inputs.sleep_hours,      // Backend expects 'hours_of_sleep'
+    stress_level: inputs.stress_level,       // Matches
+    medication_taken: Number(inputs.meds_taken), // Backend expects 'medication_taken' (as Number)
+    eeg_profile_id: inputs.eeg_profile_id    // Matches
+  };
+
+  // 2. Send the Request
+  // Ensure your API_URL is correct (e.g., 'http://localhost:8000')
+  const response = await fetch(`${API_URL}/ml/predict`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      // If your /ml/predict is protected, you might need to add:
+      // 'Authorization': `Bearer ${token}` 
+    },
+    body: JSON.stringify(payload) // Send the TRANSLATED payload
+  });
+
+  if (!response.ok) {
+    throw new Error('Prediction failed');
   }
+
+  return response.json();
 };
