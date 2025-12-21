@@ -1,6 +1,7 @@
 """EMP Backend API main entrypoint."""
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 
 from app.auth.router import router as auth_router
 from app.middleware.auth import JWTAuthMiddleware
@@ -9,6 +10,26 @@ from app.patients.router import router as patients_router
 from app.logs.router import router as logs_router
 from app.ml_engine.router import router as ml_router
 from app.csv_demo import router as csv_demo_router
+from app.utils.model_loader import sync_models_from_cloud 
+from app.services.ml_service import predictor
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # 1. DOWNLOAD (Sync files from Supabase)
+    print("🔄 Startup: Syncing models from cloud...")
+    sync_models_from_cloud()
+    
+    # 2. LOAD (Read files into RAM)
+    print("📖 Startup: Loading models into memory...")
+    predictor.load_artifacts()  # <--- This triggers the load safely
+    
+    print("🚀 System Online.")
+    yield
+    print("🛑 System Shutdown.")
+
+app = FastAPI(lifespan=lifespan)
+
 
 app = FastAPI(
     title="EMP Backend API",
