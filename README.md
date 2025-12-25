@@ -193,6 +193,33 @@ npm run dev
 
 The patient interface will be available at `http://localhost:5174`.
 
+### ML Pipeline Setup (Optional - For Training Only)
+
+**Note**: This step is only required if you want to retrain the model from scratch. The backend already includes a pre-trained model (`foundation_model_v1.ubj`), so you can skip this section for normal development.
+
+```bash
+cd ml-pipeline
+
+# Option 1: Using conda (recommended)
+conda env create -f environment.yml
+conda activate eeg-ml
+
+# Option 2: Using pip
+pip install -r requirements.txt
+
+# Run the full training pipeline
+python main_pipeline.py
+```
+
+The pipeline will:
+1. Process raw EEG data from `data/raw/eeg/`
+2. Extract features and save to `data/processed/master_eeg_features.csv`
+3. Train the XGBoost model
+4. Export the trained model to `models/foundation_model_v1.ubj`
+5. **Automatically copy** the model file to `../backend-api/app/ml_engine/`
+
+After training completes, restart the backend server to load the new model.
+
 ### Database Setup
 
 Run the following SQL in your Supabase SQL Editor:
@@ -369,7 +396,6 @@ Current model performance (validation set):
 - **AUC-ROC**: 0.92
 
 
-
 ## Contributing
 
 We welcome contributions! Please follow these guidelines:
@@ -408,3 +434,7 @@ For questions or issues:
 ## Disclaimer
 
 **This software is for research and educational purposes only. It is not FDA-approved and should not be used as a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider for medical decisions.**
+
+---
+
+Built with ❤️ for the epilepsy community
