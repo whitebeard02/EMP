@@ -1,7 +1,13 @@
 import axios from 'axios';
 
 // Ensure this matches your running Python backend URL
-const API_URL = 'http://127.0.0.1:8000';
+const API_URL = import.meta.env.VITE_API_URL;
+
+if (!API_URL) {
+  console.error("API URL is missing! Check Vercel Environment Variables.");
+}
+
+export const BASE_URL = API_URL;
 
 export interface RiskPrediction {
   risk_percentage: number;
@@ -57,7 +63,6 @@ export const getSeizureRisk = async (inputs: PatientInputs): Promise<RiskPredict
   };
 
   // 2. Send the Request
-  // Ensure your API_URL is correct (e.g., 'http://localhost:8000')
   const response = await fetch(`${API_URL}/ml/predict`, {
     method: 'POST',
     headers: {
