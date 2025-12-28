@@ -27,7 +27,7 @@ export default function App() {
       case 'profile': return 'My Profile';
       case 'settings': return 'Preferences';
       case 'history': return 'Log History';
-      default: return 'Farmlytics';
+      default: return 'EMP';
     }
   };
 

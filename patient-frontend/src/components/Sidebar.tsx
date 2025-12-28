@@ -41,7 +41,7 @@ export default function Sidebar({ activeTab, setActiveTab, isOpen, setIsOpen }: 
         {/* Logo Area */}
         <div className="p-8 flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-bold text-slate-800 tracking-tight">Farmlytics</h1>
+            <h1 className="text-xl font-bold text-slate-800 tracking-tight">EMP</h1>
             <p className="text-xs text-medical-600 font-bold uppercase tracking-wider">Patient Portal</p>
           </div>
           <button onClick={() => setIsOpen(false)} className="lg:hidden text-slate-400">
