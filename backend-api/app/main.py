@@ -40,7 +40,7 @@ app = FastAPI(
 # CORS for frontends
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # all for now
+    allow_origins=["https://emp-clinician-dashboard.vercel.app","https://emp-patient-portal.vercel.app"],  # all for now
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
